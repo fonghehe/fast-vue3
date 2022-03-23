@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SvgIcon from './SvgIcon/index.vue'
+import SvgIcon from '../SvgIcon/index.vue'
 import { ref } from 'vue'
 import { useDark, useToggle } from '@vueuse/core';
 import { useAppStore, useUserStore } from '@/store';
@@ -54,12 +54,6 @@ const ThemeChange = (val: string | number | boolean) => {
             <div class="relative items-center hidden ml-auto lg:flex">
               <nav class="text-sm font-semibold leading-6 text-slate-700 dark:text-slate-200">
                 <ul class="flex space-x-8">
-                  <li>
-                    <router-link
-                      to="/markdown"
-                      class="hover:text-sky-500 dark:hover:text-sky-400"
-                    >markdown</router-link>
-                  </li>
                   <li>
                     <router-link
                       to="/demo"
