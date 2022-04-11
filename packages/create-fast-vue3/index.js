@@ -34,7 +34,7 @@ function changePackageInfo(root, packageName) {
     fs.writeFileSync(pkgJSONPath, JSON.stringify(pkg, null, 2) + '\n')
 }
 
-function removePackagesDir(root) {
+function removeDir(root, dir) {
   const deleteFolderRecursive = function(path) {
     if (fs.existsSync(path)) {
       fs.readdirSync(path).forEach(function(file) {
@@ -49,7 +49,7 @@ function removePackagesDir(root) {
     }
   }
 
-  deleteFolderRecursive(path.join(root, "packages"))
+  deleteFolderRecursive(path.join(root, dir))
 }
 
 function isValidPackageName(projectName) {
@@ -92,6 +92,16 @@ async function init() {
   try {
     result = await prompts(
       [
+        {
+          name: 'template',
+          type: 'select',
+          message: 'Choice a Template:',
+          choices: [
+            { title: 'template-pc', description: 'This will generate template for web scene', value: 'web' },
+            { title: 'template-mobile', description: 'This will generate template for mobile scene', value: 'mobile' }
+          ],
+          initial: 0
+        },
         {
           name: 'projectName',
           type: targetDir ? null : 'text',
@@ -136,18 +146,24 @@ async function init() {
     process.exit(1)
   }
 
-  const { packageName = toValidPackageName(defaultProjectName), shouldOverwrite } = result
+  const { packageName = toValidPackageName(defaultProjectName), shouldOverwrite, template } = result
   const root = path.join(cwd, String(targetDir))
 
   if (shouldOverwrite) {
     emptyDir(root)
   }
 
+  const templates = {
+    'web': 'main',
+    'mobile': 'mobile-template'
+  }
+
   console.log(`\nScaffolding project in ${root}...`)
 
-  await loading(clone, 'waiting download template', downloadUrl, root, { checkout: 'main' })
+  await loading(clone, 'waiting download template', downloadUrl, root, { checkout: templates[template] })
 
-  removePackagesDir(root)
+  removeDir(root, "packages")
+  removeDir(root, ".git")
   changePackageInfo(root, packageName)
 
   const packageManager = /pnpm/.test(process.env.npm_execpath)
