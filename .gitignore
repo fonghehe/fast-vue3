@@ -4,11 +4,13 @@ dist
 dist-ssr
 
 .local
+.history
 # local env files
 .env.local
 .env.*.local
 .eslintcache
-
+types/auto-imports.d.ts
+types/components.d.ts
 
 # Log files
 npm-debug.log*
@@ -25,3 +27,5 @@ pnpm-lock.yaml*
 *.njsproj
 *.sln
 *.sw?
+./packages
+./history
