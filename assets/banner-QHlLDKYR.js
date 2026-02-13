@@ -1,0 +1,1 @@
+import{d as n,c as a,b as s,o,ar as r}from"./index-KThs4NJb.js";const t={class:"banner"},c=n({__name:"banner",setup(_){return(d,e)=>(o(),a("div",t,[...e[0]||(e[0]=[s("div",{class:"banner-inner"},null,-1)])]))}}),i=r(c,[["__scopeId","data-v-ea3ec88e"]]);export{i as default};
